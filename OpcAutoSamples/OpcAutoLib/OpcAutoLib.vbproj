@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="DaItem.vb" />
     <Compile Include="DaMonitor.vb" />
+    <Compile Include="DaMonitorEventArgs.vb" />
     <Compile Include="DaValue.vb" />
     <Compile Include="OpcAutoServer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

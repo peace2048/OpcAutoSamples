@@ -2,9 +2,8 @@
 
 Public Class DaMonitor
     Inherits Dictionary(Of String, DaItem)
-    Implements IObservable(Of List(Of DaItem))
 
-    Public Property ServerObject As Object
+    Public Event DataChanged As EventHandler(Of DaMonitorEventArgs)
 
     Public Overloads Sub Add(itemId As String)
         Add(itemId, New DaItem(itemId))
@@ -15,10 +14,7 @@ Public Class DaMonitor
     End Sub
 
     Public Sub OnDataChange(items As List(Of DaItem))
-
+        RaiseEvent DataChanged(Me, New DaMonitorEventArgs(items))
     End Sub
 
-    Public Function Subscribe(observer As IObserver(Of List(Of DaItem))) As IDisposable Implements IObservable(Of List(Of DaItem)).Subscribe
-        Throw New NotImplementedException()
-    End Function
 End Class
