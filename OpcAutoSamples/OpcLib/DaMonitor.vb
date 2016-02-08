@@ -1,6 +1,4 @@
-﻿Imports OpcAutoLib
-
-Public Class DaMonitor
+﻿Public Class DaMonitor
     Inherits Dictionary(Of String, DaItem)
 
     Public Event DataChanged As EventHandler(Of DaMonitorEventArgs)

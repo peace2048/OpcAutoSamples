@@ -110,6 +110,10 @@
       <Project>{a238aac4-d541-4a5e-bd2e-5b47cb6dae4c}</Project>
       <Name>OpcAutoLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OpcLib\OpcLib.vbproj">
+      <Project>{06f415eb-4bc6-4c7f-9a16-275264a6fbb1}</Project>
+      <Name>OpcLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpcRcwLib\OpcRcwLib.vbproj">
       <Project>{9a697481-ebce-45d8-88d5-ec85621de304}</Project>
       <Name>OpcRcwLib</Name>

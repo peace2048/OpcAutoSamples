@@ -2,11 +2,12 @@
 Imports System.Threading
 Imports OpcAutoLib
 Imports OPCAutomation
+Imports OpcLib
 
 Public Class OpcAutoServer
     Implements IDisposable
 
-    Private _server As OPCServer
+    Private _server As OPCAutomation.OPCServer
     Private _group As OPCGroup
     Private _items As New ConcurrentDictionary(Of String, ItemClass)()
     Private _clientHandleSequence As Integer = 0
@@ -115,9 +116,10 @@ Public Class OpcAutoServer
     End Sub
 
     Public Sub New(progId As String)
-        _server = New OPCServer()
+        _server = New OPCAutomation.OPCServer()
         _server.Connect(progId)
         _group = _server.OPCGroups.Add("default")
+        _group.IsActive = False
     End Sub
 
     Public Sub Dispose() Implements IDisposable.Dispose

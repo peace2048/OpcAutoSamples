@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A238AAC4-D541-4A5E-BD2E-5B47CB6DAE4C}</ProjectGuid>
+    <ProjectGuid>{06F415EB-4BC6-4C7F-9A16-275264A6FBB1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>OpcAutoLib</RootNamespace>
-    <AssemblyName>OpcAutoLib</AssemblyName>
+    <RootNamespace>OpcLib</RootNamespace>
+    <AssemblyName>OpcLib</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -18,7 +18,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>OpcAutoLib.xml</DocumentationFile>
+    <DocumentationFile>OpcLib.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -29,7 +29,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>OpcAutoLib.xml</DocumentationFile>
+    <DocumentationFile>OpcLib.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -56,6 +56,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
@@ -66,7 +67,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OpcAutoServer.vb" />
+    <Compile Include="DaItem.vb" />
+    <Compile Include="DaMonitor.vb" />
+    <Compile Include="DaMonitorEventArgs.vb" />
+    <Compile Include="DaValue.vb" />
+    <Compile Include="IOpcBaseGroup.vb" />
+    <Compile Include="IOpcBaseMonitorCallback.vb" />
+    <Compile Include="IOpcBaseServer.vb" />
+    <Compile Include="IOpcServerFactory.vb" />
+    <Compile Include="OpcBaseDataChangeValue.vb" />
+    <Compile Include="OpcMonitor.vb" />
+    <Compile Include="OpcServer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -101,23 +112,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="OPCAutomation">
-      <Guid>{28E68F91-8D75-11D1-8DC3-3C302A000000}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OpcLib\OpcLib.vbproj">
-      <Project>{06f415eb-4bc6-4c7f-9a16-275264a6fbb1}</Project>
-      <Name>OpcLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
