@@ -5,6 +5,7 @@ Imports OpcLib
 Public Class OpcServer
     Implements IDisposable
 
+    Private _factory As IOpcServerFactory
     Private _server As IOpcBaseServer
     Private _group As IOpcBaseGroup
     Private _items As New ConcurrentDictionary(Of String, ItemClass)()
@@ -26,9 +27,17 @@ Public Class OpcServer
             Count()
     End Sub
 
-    Public Sub New(factory As IOpcServerFactory, progId As String)
-        _server = factory.Create(progId)
+    Public Sub New(factory As IOpcServerFactory)
+        _factory = factory
+    End Sub
+
+    Public Sub Connect(progId As String)
+        _server = _factory.Create(progId)
         _group = AddGroup("default")
+    End Sub
+
+    Public Sub Disconnect()
+        Dispose()
     End Sub
 
     Friend Function AddGroup(name As String) As IOpcBaseGroup

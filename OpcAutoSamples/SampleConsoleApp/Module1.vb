@@ -1,18 +1,30 @@
-﻿Imports OpcAutoLib
+﻿Imports Autofac
+Imports OpcAutoLib
 Imports OpcLib
 Imports OpcRcwLib
 
 Module Module1
 
+    Private _container As IContainer
     Sub Main()
 
+        Dim builder = New ContainerBuilder()
+        builder.RegisterType(Of OpcLib.OpcServer)()
+        builder.Register(Function(c) New OpcRcwLib.OpcRcwServerFactory()).As(Of OpcLib.IOpcServerFactory)()
+        _container = builder.Build()
         OpcRcw()
-        'OpcAuto()
+
+        builder = New ContainerBuilder()
+        builder.RegisterType(Of OpcLib.OpcServer)()
+        builder.Register(Function(c) New OpcAutoLib.OpcAutoServerFactory()).As(Of OpcLib.IOpcServerFactory)()
+        _container = builder.Build()
+        OpcAuto()
 
     End Sub
 
     Sub OpcRcw()
-        Using server = New OpcServer(New OpcRcwServerFactory(), "TAKEBISHI.DXP")
+        Using server = _container.Resolve(Of OpcServer)()
+            server.Connect("TAKEBISHI.DXP")
 
             ' 書き込み (1件)
             server.Write("Device1.D0", 99)
@@ -52,7 +64,8 @@ Module Module1
 
         Dim t = Task.Factory.StartNew(
             Sub()
-                Using server = New OpcAutoServer("TAKEBISHI.DXP")
+                Using server = _container.Resolve(Of OpcServer)()
+                    server.Connect("TAKEBISHI.DXP")
 
                     ' 書き込み (1件)
                     server.Write("Device1.D0", 99)
@@ -72,12 +85,12 @@ Module Module1
                     Dim m1 = New DaMonitor() From {"Device1.D0", "Device1.D1"}
                     Dim m2 = New DaMonitor() From {"Device1.D0", "Device1.D2"}
                     Dim mh = New EventHandler(Of DaMonitorEventArgs)(
-                        Sub(sender As Object, e As DaMonitorEventArgs)
-                            Console.WriteLine("---")
-                            For Each b In e.ChangedItems
-                                Console.WriteLine($"{b.ItemId}={b.Result.Value}")
-                            Next
-                        End Sub)
+                                Sub(sender As Object, e As DaMonitorEventArgs)
+                                    Console.WriteLine("---")
+                                    For Each b In e.ChangedItems
+                                        Console.WriteLine($"{b.ItemId}={b.Result.Value}")
+                                    Next
+                                End Sub)
                     AddHandler m1.DataChanged, mh
                     AddHandler m2.DataChanged, mh
                     server.MonitorStart(m1)
