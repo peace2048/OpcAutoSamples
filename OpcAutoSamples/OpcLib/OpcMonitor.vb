@@ -10,7 +10,7 @@
         _group = server.AddGroup(String.Empty)
         For Each item In monitor.Values
             Dim clientHandle = server.GetNextClientHandle()
-            Dim serverHandle = _group.Add(item.ItemId, clientHandle)
+            Dim serverHandle = _group.Add(item.Device.ItemId, clientHandle)
             _items.Add(clientHandle, item)
         Next
         _callback = _group.CreateMonitorCallback(Me)

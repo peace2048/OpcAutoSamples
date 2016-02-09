@@ -19,7 +19,7 @@ Public Class OpcServer
 
     Public Sub Read(items As IEnumerable(Of DaItem))
         items.Zip(
-            _group.SyncRead(items.Select(Function(a) GetServerHandle(a.ItemId))),
+            _group.SyncRead(items.Select(Function(a) GetServerHandle(a.Device.ItemId))),
             Function(a, b)
                 a.Result.Value = b.Value
                 Return 0
@@ -49,7 +49,7 @@ Public Class OpcServer
     End Sub
 
     Public Sub Write(items As IEnumerable(Of DaItem))
-        Dim q = items.Select(Function(a) New KeyValuePair(Of Integer, Object)(GetServerHandle(a.ItemId), a.Result.Value))
+        Dim q = items.Select(Function(a) New KeyValuePair(Of Integer, Object)(GetServerHandle(a.Device.ItemId), a.Result.Value))
         _group.SyncWrite(q)
     End Sub
 

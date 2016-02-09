@@ -4,11 +4,11 @@
     Public Event DataChanged As EventHandler(Of DaMonitorEventArgs)
 
     Public Overloads Sub Add(itemId As String)
-        Add(itemId, New DaItem(itemId))
+        Add(itemId, New DaItem With {.Device = New DaDevice(itemId)})
     End Sub
 
     Public Overloads Sub Add(item As DaItem)
-        Add(item.ItemId, item)
+        Add(item.Device.ItemId, item)
     End Sub
 
     Public Sub OnDataChange(items As List(Of DaItem))

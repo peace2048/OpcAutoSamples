@@ -20,6 +20,7 @@ Module Module1
         _container = builder.Build()
         OpcAuto()
 
+        Dim a = New DaItem(New MelsecDevice With {.MelDeviceType = MelsecDeviceType.D, .Address = 0, .Count = 1})
     End Sub
 
     Sub OpcRcw()
@@ -47,7 +48,7 @@ Module Module1
                         Sub(sender As Object, e As DaMonitorEventArgs)
                             Console.WriteLine("---")
                             For Each b In e.ChangedItems
-                                Console.WriteLine($"{b.ItemId}={b.Result.Value}")
+                                Console.WriteLine($"{b.Device.ItemId}={b.Result.Value}")
                             Next
                         End Sub)
             AddHandler m1.DataChanged, mh
@@ -88,7 +89,7 @@ Module Module1
                                 Sub(sender As Object, e As DaMonitorEventArgs)
                                     Console.WriteLine("---")
                                     For Each b In e.ChangedItems
-                                        Console.WriteLine($"{b.ItemId}={b.Result.Value}")
+                                        Console.WriteLine($"{b.Device.ItemId}={b.Result.Value}")
                                     Next
                                 End Sub)
                     AddHandler m1.DataChanged, mh
